@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 
 const App = () => {
