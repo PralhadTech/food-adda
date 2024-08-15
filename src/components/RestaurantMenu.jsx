@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IMG_CDN_URL, MENU_LIST_URL } from "../constant";
+import { MENU_ITEM_IMG, MENU_LIST_URL } from "../constant";
 
 const RestaurantMenu = () => {
   const [menu, setMenu] = useState([]);
   const [menuList, setMenuList] = useState([]);
   const { resId } = useParams();
+  const defaultPrice = 100; // Default price in case of NaN
 
   useEffect(() => {
     getMenuList();
@@ -14,37 +15,65 @@ const RestaurantMenu = () => {
   async function getMenuList() {
     const response = await fetch(MENU_LIST_URL + resId);
     const jsonData = await response.json();
-    console.log(jsonData.data);
     const detail = jsonData.data.cards[2].card.card.info;
-    const list = jsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards;
-    console.log(list);
+    console.log(detail);
+    const list =
+      jsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card
+        .itemCards;
     setMenu(detail);
     setMenuList(list);
   }
+
   return (
     <>
-      <div className="border-2  justify-center flex flex-col p-2 mt-2">
-        <h1 className=" font-bold">
-          {menu.name} {menu.avgRating} {menu.totalRatingsString}{" "}
-          {menu.costForTwoMessage}
+      <h1 className="text-3xl font-bold text-center mt-6 mb-4">{menu.name}</h1>
+      <div className="border border-gray-300 rounded-lg p-4 mt-4 mx-auto max-w-2xl shadow-lg">
+        <h1 className="text-xl text-left font-bold mb-2">
+          {menu.avgRating} {menu.totalRatingsString} {menu.costForTwoMessage}
         </h1>
-        <h1>
-          {menu.city} {menu.areaName}
-        </h1>
-        <h1>{menu.cuisines}</h1>
-        {/* <span>
-          {menu.sla.lastMileTravelString} {menu.sla.minDeliveryTime} -{" "}
-          {menu.sla.maxDeliveryTime} mins
-        </span> */}
+        <h4 className="text-md text-orange-600 font-bold text-left mb-2 underline">
+          {menu.cuisines?.join(", ")}
+        </h4>
+        <div className="text-left text-gray-800">
+          <h3 className="font-medium">
+            {menu.city}, {menu.areaName}
+          </h3>
+          {/* <h5 className="font-sm">{menu.sla.slaString.toLowerCase()}</h5>
+          {/* <h4>{menu.sla.lastMileTravelString} |</h4>
+          <h5>{menu.feeDetails.message}</h5> */}{" "}
+        </div>
       </div>
 
-      <div className="text-center font-serif">
-        MENU:
-        {/* <ul>
+      <div className="text-center font-serif mt-8">
+        <h2 className="text-2xl font-semibold mb-6">MENU</h2>
+        <ul className="space-y-6">
           {menuList.map((item) => {
-            <li>wel</li>;
+            const price = isNaN(item.card.info.price / 100)
+              ? item.card.info.defaultPrice / 100
+              : item.card.info.price / 100;
+            return (
+              <div
+                key={item.card.info.id}
+                className="bg-white shadow-lg rounded-lg p-4 w-2/4 m-auto flex items-center justify-between"
+              >
+                <div className="text-left">
+                  <h3 className="font-semibold text-lg text-gray-500">
+                    {item.card.info.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">₹ {price}</p>
+                  <p className="text-md  mt-1 text-green-700 font-bold">
+                    {item.card.info.ratings?.aggregatedRating?.rating} *
+                  </p>
+                </div>
+                <img
+                  src={MENU_ITEM_IMG + item.card.info.imageId}
+                  alt={item.card.info.name}
+                  className="h-24 w-24 rounded-lg object-cover ml-4"
+                />
+              </div>
+            );
           })}
-        </ul> */}
+        </ul>
       </div>
     </>
   );

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Navbar from "./components/Navbar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Footer from "./components/Footer";
-import Body from "./components/Body";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+
+const LazyBody = lazy(() => import("./components/Body"));
 
 const App = () => {
   return (
@@ -28,7 +29,11 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Body />,
+        element: (
+          <Suspense>
+            <LazyBody />
+          </Suspense>
+        ),
       },
       {
         path: "/home",
