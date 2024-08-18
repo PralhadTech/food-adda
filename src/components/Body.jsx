@@ -3,6 +3,7 @@ import { SWIGGY_API_URL } from "../constant";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+
 // Filter the restaurant data according input type
 function filterData(searchText, resList) {
   const resFilterData = resList.filter((restaurant) =>

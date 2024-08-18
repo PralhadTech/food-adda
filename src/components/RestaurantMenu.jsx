@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MENU_ITEM_IMG, MENU_LIST_URL } from "../constant";
+import { useDispatch } from "react-redux";
+import { addItems } from "../utils/cartSlice";
 
 const RestaurantMenu = () => {
   const [menu, setMenu] = useState([]);
   const [menuList, setMenuList] = useState([]);
   const { resId } = useParams();
-  const defaultPrice = 100; // Default price in case of NaN
+  // reducers from redux
+  const dispatch = useDispatch();
+  const handleFoodItem = (item) => {
+    dispatch(addItems(item));
+  };
 
   useEffect(() => {
     getMenuList();
   }, []);
 
   async function getMenuList() {
-    const response = await fetch(MENU_LIST_URL + resId);
-    const jsonData = await response.json();
-    const detail = jsonData.data.cards[2].card.card.info;
-    console.log(detail);
-    const list =
-      jsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card
-        .itemCards;
-    setMenu(detail);
-    setMenuList(list);
+    try {
+      const response = await fetch(MENU_LIST_URL + resId);
+      const jsonData = await response.json();
+      const restDetail = jsonData.data.cards[2].card.card.info;
+      const list =
+        jsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card
+          .card.itemCards;
+      setMenu(restDetail);
+      setMenuList(list);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -40,7 +49,7 @@ const RestaurantMenu = () => {
           </h3>
           {/* <h5 className="font-sm">{menu.sla.slaString.toLowerCase()}</h5>
           {/* <h4>{menu.sla.lastMileTravelString} |</h4>
-          <h5>{menu.feeDetails.message}</h5> */}{" "}
+          <h5>{menu.feerestDetails.message}</h5> */}{" "}
         </div>
       </div>
 
@@ -70,6 +79,12 @@ const RestaurantMenu = () => {
                   alt={item.card.info.name}
                   className="h-24 w-24 rounded-lg object-cover ml-4"
                 />
+                <button
+                  className="p-2 m-2 bg-green-400 text-white rounded"
+                  onClick={() => handleFoodItem(item.card.info.name)}
+                >
+                  Add
+                </button>
               </div>
             );
           })}

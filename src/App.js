@@ -9,16 +9,20 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import { Provider } from "react-redux";
+import store from "./utils/store";
 
 const LazyBody = lazy(() => import("./components/Body"));
 
 const App = () => {
   return (
-    <div className="container m-auto">
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div className="container m-auto">
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </div>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
