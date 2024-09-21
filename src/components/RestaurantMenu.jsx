@@ -26,6 +26,7 @@ const RestaurantMenu = () => {
       const list =
         jsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card
           .card.itemCards;
+      console.log(list);
       setMenu(restDetail);
       setMenuList(list);
     } catch (error) {
@@ -35,7 +36,7 @@ const RestaurantMenu = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mt-6 mb-4">{menu.name}</h1>
+      <h1 className="text-3xl font-bold text-center mt-6 mb-4 ">{menu.name}</h1>
       <div className="border border-gray-300 rounded-lg p-4 mt-4 mx-auto max-w-2xl shadow-lg">
         <h1 className="text-xl text-left font-bold mb-2">
           {menu.avgRating} {menu.totalRatingsString} {menu.costForTwoMessage}
@@ -47,9 +48,6 @@ const RestaurantMenu = () => {
           <h3 className="font-medium">
             {menu.city}, {menu.areaName}
           </h3>
-          {/* <h5 className="font-sm">{menu.sla.slaString.toLowerCase()}</h5>
-          {/* <h4>{menu.sla.lastMileTravelString} |</h4>
-          <h5>{menu.feerestDetails.message}</h5> */}{" "}
         </div>
       </div>
 
@@ -67,7 +65,7 @@ const RestaurantMenu = () => {
               >
                 <div className="text-left">
                   <h3 className="font-semibold text-lg text-gray-500">
-                    {item.card.info.name}
+                    {item?.card?.info?.name}
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">₹ {price}</p>
                   <p className="text-md  mt-1 text-green-700 font-bold">
@@ -75,13 +73,13 @@ const RestaurantMenu = () => {
                   </p>
                 </div>
                 <img
-                  src={MENU_ITEM_IMG + item.card.info.imageId}
-                  alt={item.card.info.name}
+                  src={MENU_ITEM_IMG + item?.card?.info?.imageId}
+                  alt={item?.card?.info?.name}
                   className="h-24 w-24 rounded-lg object-cover ml-4"
                 />
                 <button
                   className="p-2 m-2 bg-green-400 text-white rounded"
-                  onClick={() => handleFoodItem(item.card.info.name)}
+                  onClick={() => handleFoodItem(item?.card?.info?.name)}
                 >
                   Add
                 </button>
