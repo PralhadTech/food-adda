@@ -50,13 +50,16 @@ const Cart = () => {
               >
                 <Delete />
               </button>
-              <button onClick={() => HandledecreaseItem(id)}>
+              <button
+                onClick={() => HandledecreaseItem(id)}
+                className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
+              >
                 <RemoveCircleOutlineOutlined />
               </button>
 
               <button
                 onClick={() => handleIncreaseItem(item.id)}
-                className="text-white bg-green-400 p-2 mt2"
+                className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
               >
                 <Add />
               </button>

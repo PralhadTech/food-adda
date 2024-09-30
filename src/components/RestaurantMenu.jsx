@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { MENU_ITEM_IMG, MENU_LIST_URL } from "../constant";
 import { useDispatch } from "react-redux";
 import { addItems } from "../utils/cartSlice";
+import MenuShimmer from "./MenuShimmer";
 
 const RestaurantMenu = () => {
   const [menu, setMenu] = useState([]);
@@ -34,6 +35,7 @@ const RestaurantMenu = () => {
     }
   }
 
+  if (menuList.length === 0) return <MenuShimmer />;
   return (
     <>
       <h1 className="text-4xl font-extrabold text-center mt-10 mb-8 text-gray-800">

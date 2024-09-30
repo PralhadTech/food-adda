@@ -51,7 +51,7 @@ const Body = () => {
     <div className="p-4">
       <input
         type="text"
-        className="h-8 p-2 rounded"
+        className="h-8 p-2 border rounded"
         placeholder="Serach Here"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
