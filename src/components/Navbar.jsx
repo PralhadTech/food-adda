@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import useOnline from "../utils/useOnline";
 import { useSelector } from "react-redux";
+import Login from "./Login";
 
 const Navbar = () => {
   const isOnline = useOnline();
@@ -27,9 +28,12 @@ const Navbar = () => {
           </li>
           <h1>{isOnline ? "Online" : "Offline"}</h1>
           <li className="flex items-center hover:text-yellow-500 transition duration-300">
+            <Link to="/login">Login</Link>
+          </li>
+          <li className="flex items-center hover:text-yellow-500 transition duration-300">
             <Link to="/cart">
               <AddShoppingCartIcon className="text-yellow-500" />
-              {cartItems.length}
+              {cartItems.length === 0 ? null : cartItems.length}
             </Link>
           </li>
         </ul>
