@@ -28,6 +28,7 @@ const Body = () => {
         json.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants;
       setResList(resData);
+      console.log(resData);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
     }

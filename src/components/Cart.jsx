@@ -10,19 +10,21 @@ import { Add, Delete, RemoveCircleOutlineOutlined } from "@mui/icons-material";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
-  console.log(cartItems);
   const dispatch = useDispatch();
 
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
   const handleRemoveItem = (id) => {
     dispatch(removeItem(id));
   };
+
   const handleIncreaseItem = (id) => {
     dispatch(increaseQuantity(id));
   };
-  const HandledecreaseItem = (id) => {
+
+  const handleDecreaseItem = (id) => {
     dispatch(decreaseQuantity(id));
   };
 
@@ -34,41 +36,45 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-500">Your cart is empty.</p>
       ) : (
-        <ul className=" p-2">
-          {cartItems.map((item, id) => (
-            <div className="flex justify-between" key={id}>
-              <li className="p-2 mt-2 w-full mr-2 bg-white shadow-sm rounded-lg border border-gray-200">
-                {item?.card?.info?.name} Price -{" "}
-                {isNaN(item.card.info.price / 100)
-                  ? item.card.info.defaultPrice / 100
-                  : item.card.info.price / 100}
-                {console.log(item)}
-              </li>
-              <button
-                onClick={() => handleRemoveItem(id)}
-                className=" text-red-400 hover:text-red-600 bg-white shadow-sm border rounded p-2 mt-2"
+        <ul className="p-2">
+          {cartItems.map((item) => {
+            const price = isNaN(item.card.info.price / 100)
+              ? item.card.info.defaultPrice / 100
+              : item.card.info.price / 100;
+            return (
+              <div
+                className="flex justify-between items-center"
+                key={item.card.info.id}
               >
-                <Delete />
-              </button>
-              <button
-                onClick={() => HandledecreaseItem(id)}
-                className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
-              >
-                <RemoveCircleOutlineOutlined />
-              </button>
-
-              <button
-                onClick={() => handleIncreaseItem(item.id)}
-                className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
-              >
-                <Add />
-              </button>
-            </div>
-          ))}
+                <li className="p-2 mt-2 w-full mr-2 bg-white shadow-sm rounded-lg border border-gray-200">
+                  {item.card.info.name} - ₹ {price} x {item.quantity}
+                </li>
+                <div className="flex items-center">
+                  <button
+                    onClick={() => handleDecreaseItem(item.card.info.id)}
+                    className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
+                  >
+                    <RemoveCircleOutlineOutlined />
+                  </button>
+                  <button
+                    onClick={() => handleIncreaseItem(item.card.info.id)}
+                    className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"
+                  >
+                    <Add />
+                  </button>
+                  <button
+                    onClick={() => handleRemoveItem(item.card.info.id)}
+                    className="text-red-400 hover:text-red-600 bg-white shadow-sm border rounded p-2 mt-2"
+                  >
+                    <Delete />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </ul>
       )}
 
-      <h1>Total Bill: {}</h1>
       <button
         onClick={handleClearCart}
         className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 mt-2 rounded-lg transition-colors duration-300 ease-in-out"
