@@ -47,7 +47,7 @@ const Cart = () => {
                 key={item.card.info.id}
               >
                 <li className="p-2 mt-2 w-full mr-2 bg-white shadow-sm rounded-lg border border-gray-200">
-                  {item.card.info.name} - ₹ {price} x {item.quantity}
+                  {item.card.info.name} - ₹ {price}
                 </li>
                 <div className="flex items-center">
                   <button
@@ -56,6 +56,7 @@ const Cart = () => {
                   >
                     <RemoveCircleOutlineOutlined />
                   </button>
+                  <p>{item.quantity}</p>
                   <button
                     onClick={() => handleIncreaseItem(item.card.info.id)}
                     className="text-green-400 hover:text-green-600 bg-white shadow-sm border rounded p-2 mt-2"

@@ -29,7 +29,7 @@ const RestaurantMenu = () => {
           .card.itemCards;
       setMenu(restDetail);
       setMenuList(list);
-      // console.log(list);
+      console.log(list);
     } catch (error) {
       console.error(error);
     }
